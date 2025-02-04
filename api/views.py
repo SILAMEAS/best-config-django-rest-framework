@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404,get_list_or_404
+from django.http import JsonResponse
 
 @api_view(['GET'])
 def product_list(request):
@@ -36,12 +37,15 @@ def product_detail(request,pk):
 
 @api_view(['GET'])
 def order_list(request):
-    orders= Order.objects.all()
-    serializer=OrderSerializer(orders,many=True)
-    return Response(
-        serializer.data,
-        status=status.HTTP_200_OK
-    )
+    try:
+        orders= Order.objects.all()
+        serializer=OrderSerializer(orders,many=True)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+    except Exception as e:
+        return JsonResponse({'message':e.args})
 
 @api_view(['GET','PUT',"DELETE"])
 def order_detail(request,pk):

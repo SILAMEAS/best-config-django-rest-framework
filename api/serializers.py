@@ -29,7 +29,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "product_name",
             "product_price",
             "product",
-            "quantity"
+            "quantity",
             "item_subtotal"
         )
     

@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2025-02-04 10:49
+  // Created: 2025-02-04 20:24
   // Cli Options: api
 
   fontname = "Roboto"
@@ -293,6 +293,14 @@ digraph model_graph {
   
   
     <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">create_at</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Roboto">status</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Roboto">CharField</FONT>
@@ -392,7 +400,7 @@ digraph model_graph {
   [label=" user (order)"] [arrowhead=none, arrowtail=dot, dir=both];
 
   api_models_OrderItem -> api_models_Order
-  [label=" order (orderitem)"] [arrowhead=none, arrowtail=dot, dir=both];
+  [label=" order (items)"] [arrowhead=none, arrowtail=dot, dir=both];
 
   api_models_OrderItem -> api_models_Product
   [label=" product (orderitem)"] [arrowhead=none, arrowtail=dot, dir=both];

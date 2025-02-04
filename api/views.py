@@ -37,15 +37,12 @@ def product_detail(request,pk):
 
 @api_view(['GET'])
 def order_list(request):
-    try:
-        orders= Order.objects.all()
-        serializer=OrderSerializer(orders,many=True)
-        return Response(
+    orders= Order.objects.all()
+    serializer=OrderSerializer(orders,many=True)
+    return Response(
             serializer.data,
             status=status.HTTP_200_OK
         )
-    except Exception as e:
-        return JsonResponse({'message':e.args})
 
 @api_view(['GET','PUT',"DELETE"])
 def order_detail(request,pk):

@@ -40,3 +40,6 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
         path('silk/', include('silk.urls', namespace='silk'))
     -  run : python manage.py migrate
     -  then go to : localhost:8000/silk
+
+- STEP 8 : create super user
+    run : python .\manage.py createsuperuser

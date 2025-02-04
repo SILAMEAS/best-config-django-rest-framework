@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'api'
+    'api',
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
@@ -113,3 +114,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='api.User'
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler'
+}

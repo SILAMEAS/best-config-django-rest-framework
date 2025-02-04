@@ -1,4 +1,5 @@
-from api.serializers import ProductSerializer,OrderItemSerializer,OrderSerializer
+from django.db.models import Max
+from api.serializers import ProductSerializer,OrderItemSerializer,OrderSerializer,ProductInfoSerializer
 from api.models import Product,OrderItem,Order
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -57,3 +58,13 @@ def order_detail(request,pk):
     elif request.method =='DELETE':
         order.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def product_info(request):
+    products = Product.objects.all()
+    serializer = ProductInfoSerializer({
+        'products': products,
+        'count': len(products),
+        'max_price': products.aggregate(max_price=Max('price'))['max_price']
+    })
+    return Response(serializer.data)

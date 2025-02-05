@@ -70,3 +70,9 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
     ] 
 - STEP 10 : testing api 
     python manage.py test
+
+- STEP 11 : JWT ( Install : djangorestframework-simplejwt) 
+    link : [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt)
+    get start : https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+    - pip install djangorestframework-simplejwt
+

@@ -1,18 +1,16 @@
 from api.serializers import ProductSerializer,OrderItemSerializer,OrderSerializer,ProductInfoSerializer
 from api.models import Product,OrderItem,Order
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status,generics
-from django.shortcuts import get_object_or_404,get_list_or_404
+from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Max
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 # ===========================================================
-#                   Products List 
+#                   Products List / Create
 # ===========================================================
-class ProductListAPIView(generics.ListAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     # .filter(stock__gt=0)  filter product that has stock > 0
     # .exclude(stock__gt=0) filter product that has stock == 0
     queryset = Product.objects.prefetch_related('order_items','orders').filter(stock__gt=0)

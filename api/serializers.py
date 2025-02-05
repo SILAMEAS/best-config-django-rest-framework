@@ -9,7 +9,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "name",
             "price",
             "stock",
-            "orders"
+            "orders",
+            "description"
         )
     def validate_price(self,value):
         if value<=0:

@@ -87,3 +87,16 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
         path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
         path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     ]
+
+- STEP 13 : Filter Backend
+    pip install django-filter
+
+    INSTALLED_APPS = [
+    ...
+    'django_filters',
+    ...
+    ]
+
+    REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    }

@@ -5,6 +5,7 @@ from rest_framework import generics
 from django.db.models import Max
 from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from rest_framework.views import APIView
+from api.filters import ProductFilter
 
 # ===========================================================
 #                   Products List / Create
@@ -14,6 +15,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     # .exclude(stock__gt=0) filter product that has stock == 0
     queryset = Product.objects.prefetch_related('order_items','orders').filter(stock__gt=0)
     serializer_class = ProductSerializer
+    filterset_class = ProductFilter
     def get_permissions(self):
         self.permission_classes =[AllowAny]
         if self.request.method == 'POST':

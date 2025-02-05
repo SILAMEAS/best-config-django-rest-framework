@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     'django_extensions',
     'api',
     "rest_framework",
-    'silk'
+    'silk',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -119,3 +121,10 @@ AUTH_USER_MODEL='api.User'
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler'
 }
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4000"
+]
+
+CORS_ALLOW_CREDENTIALS = True  # If you're using authentication
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+CORS_ALLOW_HEADERS = ["*"]

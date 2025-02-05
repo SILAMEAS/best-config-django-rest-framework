@@ -43,3 +43,29 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
 
 - STEP 8 : create super user
     run : python .\manage.py createsuperuser
+
+- STEP 9 : allow cor origin
+    pip install django-cors-headers
+
+
+    INSTALLED_APPS = [
+    ...
+    'corsheaders',
+    ...
+    ]
+
+    MIDDLEWARE = [  
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    ...
+    ]
+
+    CORS_ORIGIN_ALLOW_ALL=True 
+    OR
+    CORS_ORIGIN_WHITELIST = [
+    'http://google.com',
+    'http://hostname.example.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:9000'
+    ] 
+

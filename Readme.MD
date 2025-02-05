@@ -68,4 +68,5 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
     'http://localhost:8000',
     'http://127.0.0.1:9000'
     ] 
-
+- STEP 10 : testing api 
+    python manage.py test

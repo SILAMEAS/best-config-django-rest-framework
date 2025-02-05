@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404,get_list_or_404
 from django.http import JsonResponse
 from django.db.models import Max
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 # ===========================================================
 #                   Products List 
@@ -50,12 +51,13 @@ class UserOrderListAPIView(generics.ListAPIView):
 # ===========================================================
 #                   Products Info
 # ===========================================================
-@api_view(['GET'])
-def product_info(request):
-    products = Product.objects.prefetch_related("order_items").all()
-    serializer = ProductInfoSerializer({
-        'products': products,
-        'count': len(products),
-        'max_price': products.aggregate(max_price=Max('price'))['max_price']
-    })
-    return Response(serializer.data)
+class ProductInfoAPIView(APIView):
+    def get(self,request):
+        products = Product.objects.prefetch_related("order_items").all()
+        serializer = ProductInfoSerializer({
+            'products': products,
+            'count': len(products),
+            'max_price': products.aggregate(max_price=Max('price'))['max_price']
+        })
+        return Response(serializer.data)
+

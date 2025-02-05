@@ -1,10 +1,9 @@
 from api.serializers import ProductSerializer,OrderItemSerializer,OrderSerializer,ProductInfoSerializer
-from api.models import Product,OrderItem,Order
+from api.models import Product,Order
 from rest_framework.response import Response
 from rest_framework import generics
-from django.http import JsonResponse
 from django.db.models import Max
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from rest_framework.views import APIView
 
 # ===========================================================
@@ -15,6 +14,11 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     # .exclude(stock__gt=0) filter product that has stock == 0
     queryset = Product.objects.prefetch_related('order_items','orders').filter(stock__gt=0)
     serializer_class = ProductSerializer
+    def get_permissions(self):
+        self.permission_classes =[AllowAny]
+        if self.request.method == 'POST':
+            self.permission_classes=[IsAdminUser]
+        return super().get_permissions()
 
 # ===========================================================
 #                   Product Detail

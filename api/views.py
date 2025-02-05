@@ -23,9 +23,14 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 # ===========================================================
 #                   Product Detail
 # ===========================================================
-class ProductDetailAPIView(generics.RetrieveAPIView):
+class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.prefetch_related('order_items','orders').all()
     serializer_class = ProductSerializer
+    def get_permissions(self):
+        self.permission_classes =[AllowAny]
+        if self.request.method in ['PUT','PATCH','DELETE']:
+            self.permission_classes=[IsAdminUser]
+        return super().get_permissions()
 # ===========================================================
 #                   Order List 
 # ===========================================================

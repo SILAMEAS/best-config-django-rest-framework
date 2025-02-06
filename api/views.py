@@ -7,13 +7,14 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from rest_framework.views import APIView
 from api.filters import ProductFilter,InStockFilterBackend
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import PageNumberPagination,LimitOffsetPagination
 # ===========================================================
 #                   Products List / Create
 # ===========================================================
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     # .filter(stock__gt=0)  filter product that has stock > 0
     # .exclude(stock__gt=0) filter product that has stock == 0
-    queryset = Product.objects.prefetch_related('order_items','orders').all()
+    queryset = Product.objects.prefetch_related('order_items','orders').order_by('pk')
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     search_fields = [
@@ -32,6 +33,12 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
         'price',
         'stock'
         ]
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 5                # if we don't pass this page_size it will take page_size from setting
+    pagination_class.page_query_param='pageNum'   # http://localhost:8000/products/?pageNum=5
+    pagination_class.page_size_query_param='size' # http://localhost:8000/products/?pageNum=5&size=5
+    pagination_class.max_page_size=10             # if size that we pass in url more than max_page_size it only take max_page_size
+    # pagination_class = LimitOffsetPagination        # http://localhost:8000/products/?limit=2&offset=8
     def get_permissions(self):
         self.permission_classes =[AllowAny]
         if self.request.method == 'POST':

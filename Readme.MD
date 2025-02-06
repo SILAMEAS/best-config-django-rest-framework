@@ -1,4 +1,4 @@
-- run 
+-                                  Application Step
 + STPE 1 
     python -m venv ./venv-drf
 
@@ -100,3 +100,7 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
     REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
     }
+
+- STEP 14 : install isort
+    pip install isort
+    isort .\api\views.py

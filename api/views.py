@@ -1,13 +1,19 @@
-from api.serializers import ProductSerializer,OrderItemSerializer,OrderSerializer,ProductInfoSerializer
-from api.models import Product,Order
-from rest_framework.response import Response
-from rest_framework import generics,filters,viewsets
 from django.db.models import Max
-from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
-from rest_framework.views import APIView
-from api.filters import ProductFilter,InStockFilterBackend
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.pagination import PageNumberPagination,LimitOffsetPagination
+from rest_framework import filters, generics, viewsets
+from rest_framework.pagination import (LimitOffsetPagination,
+                                       PageNumberPagination)
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from api.filters import InStockFilterBackend, OrderFilter, ProductFilter
+from api.models import Order, Product
+from api.serializers import (OrderItemSerializer, OrderSerializer,
+                             ProductInfoSerializer, ProductSerializer)
+from rest_framework.decorators import action
+
+
 # ===========================================================
 #                   Products List / Create
 # ===========================================================
@@ -97,3 +103,16 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related('items__product')
     serializer_class= OrderSerializer
     permission_classes = [AllowAny]
+    filterset_class = OrderFilter
+    filter_backends = [DjangoFilterBackend]
+    permission_classes=[IsAuthenticated]
+    pagination_class=None
+    @action(
+            detail=False,
+            methods=['get'],
+            url_path='user-orders'
+            )
+    def user_orders(self,request):
+        orders=self.get_queryset().filter(user=request.user)
+        serializer = self.get_serializer(orders,many=True)
+        return Response(serializer.data)

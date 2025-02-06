@@ -5,7 +5,7 @@ from rest_framework import generics,filters
 from django.db.models import Max
 from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from rest_framework.views import APIView
-from api.filters import ProductFilter
+from api.filters import ProductFilter,InStockFilterBackend
 from django_filters.rest_framework import DjangoFilterBackend
 # ===========================================================
 #                   Products List / Create
@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     # .filter(stock__gt=0)  filter product that has stock > 0
     # .exclude(stock__gt=0) filter product that has stock == 0
-    queryset = Product.objects.prefetch_related('order_items','orders').filter(stock__gt=0)
+    queryset = Product.objects.prefetch_related('order_items','orders').all()
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     search_fields = [
@@ -24,7 +24,8 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     filter_backends =[
         DjangoFilterBackend,
         filters.SearchFilter,
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        InStockFilterBackend
         ]
     ordering_fields= [
         'name',

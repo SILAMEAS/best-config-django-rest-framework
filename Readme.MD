@@ -74,17 +74,17 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
             get start : https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
             pip install djangorestframework-simplejwt
 - STEP 12 : Open API
-    link : https://drf-spectacular.readthedocs.io/en/latest/readme.html
+        link : https://drf-spectacular.readthedocs.io/en/latest/readme.html
             pip install drf-spectacular
             python ./manage.py spectacular --color --file schema.yml
-            from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-            urlpatterns = [
-                # YOUR PATTERNS
-                path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-                # Optional UI:
-                path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-                path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-            ]
+        from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+        urlpatterns = [
+        # YOUR PATTERNS
+        path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+        # Optional UI:
+        path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+        path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+        ]
 
 - STEP 13 : Filter Backend
             pip install django-filter
@@ -99,6 +99,7 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
             'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
             }
 
-- STEP 14 : install isort
+- STEP 14 : 
+    install isort
             pip install isort
             isort .\api\views.py

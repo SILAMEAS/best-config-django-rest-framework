@@ -1,21 +1,20 @@
--           Application Step
 + STPE 1 
-    python -m venv ./venv-drf
+            python -m venv ./venv-drf
 
 + STPE 2
-    pip install -r ./requirements.txt
+            pip install -r ./requirements.txt
 
 + STEP 3 make migrations
-    python .\manage.py makemigrations
+            python .\manage.py makemigrations
 
 + STEP 4 make migrate
-    python .\manage.py migrate
+            python .\manage.py migrate
 
 + STEP 5 populate db <pass data in database as Sample data>
-    python .\manage.py populate_db
+            python .\manage.py populate_db
 
 + STEP 6 generate diagram to file models.dot
-    python .\manage.py graph_models api > models.dot
+            python .\manage.py graph_models api > models.dot
 
 You can copy data in file models.dot paslte in 
 
@@ -23,84 +22,83 @@ url : https://dreampuf.github.io/GraphvizOnline/?engine=dot#digraph%20G%20%7B%0A
 
 + STEP 7 : installing django-silk for view and optimize sql query
 
-    -  link git : https://github.com/jazzband/django-silk
-    -  pip install django-silk
-    -  setting.py 
-        MIDDLEWARE = [
-            ...
-            'silk.middleware.SilkyMiddleware',
-            ...
-        ]
+            -  link git : https://github.com/jazzband/django-silk
+            pip install django-silk
+            -  setting.py 
+                MIDDLEWARE = [
+                    ...
+                    'silk.middleware.SilkyMiddleware',
+                    ...
+                ]
 
-        INSTALLED_APPS = (
-            ...
-            'silk'
-        )
-    -  urls.py :
-        path('silk/', include('silk.urls', namespace='silk'))
-    -  run : python manage.py migrate
-    -  then go to : localhost:8000/silk
+                INSTALLED_APPS = (
+                    ...
+                    'silk'
+                )
+            -  urls.py :
+                path('silk/', include('silk.urls', namespace='silk'))
+                    python manage.py migrate
+            -  then go to : localhost:8000/silk
 
 - STEP 8 : create super user
-    run : python .\manage.py createsuperuser
+            python .\manage.py createsuperuser
 
 - STEP 9 : allow cor origin
-    pip install django-cors-headers
+            pip install django-cors-headers
 
+            INSTALLED_APPS = [
+            ...
+            'corsheaders',
+            ...
+            ]
 
-    INSTALLED_APPS = [
-    ...
-    'corsheaders',
-    ...
-    ]
+            MIDDLEWARE = [  
+            'corsheaders.middleware.CorsMiddleware',
+            'django.middleware.common.CommonMiddleware',
+            ...
+            ]
 
-    MIDDLEWARE = [  
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    ...
-    ]
-
-    CORS_ORIGIN_ALLOW_ALL=True 
-    OR
-    CORS_ORIGIN_WHITELIST = [
-    'http://google.com',
-    'http://hostname.example.com',
-    'http://localhost:8000',
-    'http://127.0.0.1:9000'
-    ] 
+            CORS_ORIGIN_ALLOW_ALL=True 
+            OR
+            CORS_ORIGIN_WHITELIST = [
+            'http://google.com',
+            'http://hostname.example.com',
+            'http://localhost:8000',
+            'http://127.0.0.1:9000'
+            ] 
 - STEP 10 : testing api 
-    python manage.py test
+            python manage.py test
 
 - STEP 11 : JWT ( Install : djangorestframework-simplejwt) 
-    link : [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt)
-    get start : https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-    - pip install djangorestframework-simplejwt
+            link : [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt)
+            get start : https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+            pip install djangorestframework-simplejwt
 - STEP 12 : Open API
     link : https://drf-spectacular.readthedocs.io/en/latest/readme.html
-    pip install drf-spectacular
-    python ./manage.py spectacular --color --file schema.yml
-    from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-    urlpatterns = [
-        # YOUR PATTERNS
-        path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-        # Optional UI:
-        path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-        path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    ]
+            pip install drf-spectacular
+            python ./manage.py spectacular --color --file schema.yml
+            from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+            urlpatterns = [
+                # YOUR PATTERNS
+                path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+                # Optional UI:
+                path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+                path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+            ]
 
 - STEP 13 : Filter Backend
-    pip install django-filter
+            pip install django-filter
 
-    INSTALLED_APPS = [
-    ...
-    'django_filters',
-    ...
-    ]
+            INSTALLED_APPS = [
+            ...
+            'django_filters',
+            ...
+            ]
 
-    REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-    }
+            REST_FRAMEWORK = {
+            'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+            }
 
 - STEP 14 : install isort
-    pip install isort
-    isort .\api\views.py
+            pip install isort
+            isort .\api\views.py

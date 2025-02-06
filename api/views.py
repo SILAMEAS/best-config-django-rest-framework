@@ -2,6 +2,7 @@ from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, viewsets
 from rest_framework.pagination import (PageNumberPagination)
+from api.pagination import CustomPagination
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,7 +10,7 @@ from rest_framework.views import APIView
 from api.filters import InStockFilterBackend, OrderFilter, ProductFilter
 from api.models import Order, Product,User
 from api.serializers import ( OrderSerializer,
-                             ProductInfoSerializer, ProductSerializer,UserDetailSerializer,OrderCreateSerializer)
+                             ProductInfoSerializer, ProductSerializer,UserDetailSerializer,OrderCreateSerializer,UserSerializer)
 from rest_framework.decorators import action
 
 
@@ -17,11 +18,10 @@ from rest_framework.decorators import action
 #                   Products List / Create
 # ===========================================================
 class ProductListCreateAPIView(generics.ListCreateAPIView):
-    # .filter(stock__gt=0)  filter product that has stock > 0
-    # .exclude(stock__gt=0) filter product that has stock == 0
     queryset = Product.objects.prefetch_related('order_items','orders').order_by('pk')
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
+    # Search Field
     search_fields = [
         'name',
         'price',
@@ -33,17 +33,13 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
         filters.OrderingFilter,
         InStockFilterBackend
         ]
+    # Sort Fields
     ordering_fields= [
         'name',
         'price',
         'stock'
         ]
-    pagination_class = PageNumberPagination
-    pagination_class.page_size = 5                # if we don't pass this page_size it will take page_size from setting
-    pagination_class.page_query_param='pageNum'   # http://localhost:8000/products/?pageNum=5
-    pagination_class.page_size_query_param='size' # http://localhost:8000/products/?pageNum=5&size=5
-    pagination_class.max_page_size=10             # if size that we pass in url more than max_page_size it only take max_page_size
-    # pagination_class = LimitOffsetPagination    # http://localhost:8000/products/?limit=2&offset=8
+    pagination_class = CustomPagination
     def get_permissions(self):
         self.permission_classes =[AllowAny]
         if self.request.method == 'POST':
@@ -83,7 +79,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend]
     permission_classes=[IsAuthenticated]
-    pagination_class=None
+    pagination_class = CustomPagination
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
     def get_serializer_class(self):
@@ -99,9 +95,32 @@ class OrderViewSet(viewsets.ModelViewSet):
         if not self.request.user.is_staff:
             qs = qs.filter(user=self.request.user)
         return qs
-    
+
+# ===========================================================
+#                   User 
+# ===========================================================
+class UserListCreateAPIView(generics.ListCreateAPIView):
+    queryset=User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+    def get_permissions(self):
+        self.permission_classes =[AllowAny]
+        if self.request.method == 'POST':
+            self.permission_classes=[IsAdminUser]
+        return super().get_permissions()
+class UserUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    def get_permissions(self):
+        self.permission_classes =[IsAuthenticated]
+        if self.request.method in ['PUT','PATCH','DELETE']:
+            self.permission_classes=[IsAdminUser]
+        return super().get_permissions()
+
+
 class UserDetailAPIView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
     permission_classes=[IsAuthenticated]
     def get_object(self):
         return self.request.user  # Fetches the authenticated user
+    

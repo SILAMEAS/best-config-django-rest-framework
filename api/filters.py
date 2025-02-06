@@ -22,3 +22,7 @@ class OrderFilter(django_filters.FilterSet):
             'status':['exact'],
             'create_at':['exact','gt','lt']
         }
+
+
+    # .filter(stock__gt=0)  filter product that has stock > 0
+    # .exclude(stock__gt=0) filter product that has stock == 0

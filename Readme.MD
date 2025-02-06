@@ -1,3 +1,4 @@
+python .\manage.py runserver
 + STPE 1 : create venv
 -           python -m venv ./venv-drf
 

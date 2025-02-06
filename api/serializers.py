@@ -53,11 +53,6 @@ class OrderSerializer(serializers.ModelSerializer):
             "total_price"
         )
 
-
-class UserDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 class OrderCreateSerializer(serializers.ModelSerializer):
     class OrderItemCreateSerializer(serializers.ModelSerializer):
         class Meta:
@@ -105,3 +100,15 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
         }
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields="__all__"
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name','is_staff','password','id']
+    def validate_password(self,value):
+        if value is None:
+            raise serializers.ValidationError('Password is required!')
+        return value

@@ -44,7 +44,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     pagination_class.page_query_param='pageNum'   # http://localhost:8000/products/?pageNum=5
     pagination_class.page_size_query_param='size' # http://localhost:8000/products/?pageNum=5&size=5
     pagination_class.max_page_size=10             # if size that we pass in url more than max_page_size it only take max_page_size
-    # pagination_class = LimitOffsetPagination        # http://localhost:8000/products/?limit=2&offset=8
+    # pagination_class = LimitOffsetPagination    # http://localhost:8000/products/?limit=2&offset=8
     def get_permissions(self):
         self.permission_classes =[AllowAny]
         if self.request.method == 'POST':
@@ -102,17 +102,13 @@ class ProductInfoAPIView(APIView):
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related('items__product')
     serializer_class= OrderSerializer
-    permission_classes = [AllowAny]
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend]
     permission_classes=[IsAuthenticated]
     pagination_class=None
-    @action(
-            detail=False,
-            methods=['get'],
-            url_path='user-orders'
-            )
-    def user_orders(self,request):
-        orders=self.get_queryset().filter(user=request.user)
-        serializer = self.get_serializer(orders,many=True)
-        return Response(serializer.data)
+    # check if you not admin they just see the order of them if admin can see all of order
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not self.request.user.is_staff:
+            qs = qs.filter(user=self.request.user)
+        return qs

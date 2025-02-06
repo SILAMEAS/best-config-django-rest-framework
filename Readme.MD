@@ -1,4 +1,4 @@
--                                  Application Step
+- Application Step
 + STPE 1 
     python -m venv ./venv-drf
 

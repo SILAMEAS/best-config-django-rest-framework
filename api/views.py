@@ -1,16 +1,15 @@
 from django.db.models import Max
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, viewsets
-from rest_framework.pagination import (LimitOffsetPagination,
-                                       PageNumberPagination)
+from rest_framework.pagination import (PageNumberPagination)
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.filters import InStockFilterBackend, OrderFilter, ProductFilter
-from api.models import Order, Product
-from api.serializers import (OrderItemSerializer, OrderSerializer,
-                             ProductInfoSerializer, ProductSerializer)
+from api.models import Order, Product,User
+from api.serializers import ( OrderSerializer,
+                             ProductInfoSerializer, ProductSerializer,UserDetailSerializer,OrderCreateSerializer)
 from rest_framework.decorators import action
 
 
@@ -63,30 +62,6 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             self.permission_classes=[IsAdminUser]
         return super().get_permissions()
 # ===========================================================
-#                   Order List 
-# ===========================================================
-# class OrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related('items','items__product').all()
-#     serializer_class = OrderSerializer
-
-# ===========================================================
-#                   Order Detail
-# ===========================================================
-# class OrderDetailAPIView(generics.RetrieveAPIView):
-#     queryset = Order.objects.prefetch_related('items','items__product').all()
-#     serializer_class = OrderSerializer
-
-# ===========================================================
-#                   Order List By User Login
-# ===========================================================
-# class UserOrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related('items','items__product').all()
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated]
-#     def get_queryset(self):
-#         qs = super().get_queryset()
-#         return qs.filter(user=self.request.user)
-# ===========================================================
 #                   Products Info
 # ===========================================================
 class ProductInfoAPIView(APIView):
@@ -98,6 +73,9 @@ class ProductInfoAPIView(APIView):
             'max_price': products.aggregate(max_price=Max('price'))['max_price']
         })
         return Response(serializer.data)
+# ===========================================================
+#                   Order viewsets 
+# ===========================================================
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related('items__product')
@@ -106,9 +84,24 @@ class OrderViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     permission_classes=[IsAuthenticated]
     pagination_class=None
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    def get_serializer_class(self):
+        # POST
+        if self.action =='create':
+            # OrderCreateSerializer
+            return OrderCreateSerializer
+        return super().get_serializer_class()
     # check if you not admin they just see the order of them if admin can see all of order
+    # GET
     def get_queryset(self):
         qs = super().get_queryset()
         if not self.request.user.is_staff:
             qs = qs.filter(user=self.request.user)
         return qs
+    
+class UserDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = UserDetailSerializer
+    permission_classes=[IsAuthenticated]
+    def get_object(self):
+        return self.request.user  # Fetches the authenticated user

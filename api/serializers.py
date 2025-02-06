@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product,Order,OrderItem
+from .models import Product,Order,OrderItem,User
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,7 +33,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "quantity",
             "item_subtotal"
         )
-    
+
 class OrderSerializer(serializers.ModelSerializer):
     order_id=serializers.UUIDField(read_only=True)
     items = OrderItemSerializer(many=True,read_only=True)
@@ -52,4 +52,34 @@ class OrderSerializer(serializers.ModelSerializer):
             "total_price"
         )
 
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+class OrderCreateSerializer(serializers.ModelSerializer):
+    class OrderItemCreateSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = OrderItem
+            fields=('product','quantity')
+    items= OrderItemCreateSerializer(many=True)
+    def create(self, validated_data):
+        orderItem_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+        for orderItem in orderItem_data:
+            OrderItem.objects.create(order=order,**orderItem)
+        return order
+    order_id=serializers.UUIDField(read_only=True)
+    class Meta:
+        model = Order
+        fields= (
+            "order_id",
+            "user",
+            "status",
+            "items"
+        )
+        extra_kwargs={
+            'user':{'read_only':True}
+
+        }
 

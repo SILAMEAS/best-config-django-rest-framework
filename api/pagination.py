@@ -7,12 +7,12 @@ class CustomPagination(PageNumberPagination):
     page_query_param='page'
     max_page_size = 20
     def get_paginated_response(self, data):
-        # print(self.page.)
         return Response({
             'hasNext':self.page.has_next(),
             'currentPage':self.page.number,
-            'totals': self.page.paginator.count,
-            'data': data
+            'total': self.page.paginator.count,
+            'contents': data,
+            'totalPages': self.page.paginator.num_pages,
         })
     
     # pagination_class = LimitOffsetPagination    # http://localhost:8000/products/?limit=2&offset=8

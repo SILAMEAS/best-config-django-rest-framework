@@ -146,4 +146,9 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
-CORS_ORIGIN_ALLOW_ALL=True 
+CORS_ORIGIN_ALLOW_ALL=True
+
+import os
+
+MEDIA_URL = '/media/'  # URL prefix for accessing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored

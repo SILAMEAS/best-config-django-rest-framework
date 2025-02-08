@@ -20,7 +20,7 @@ from rest_framework.decorators import action
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.prefetch_related('order_items','orders').order_by('pk')
     serializer_class = ProductSerializer
-    filterset_class = ProductFilter
+
     # Search Field
     search_fields = [
         'name',
@@ -33,6 +33,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
         filters.OrderingFilter,
         InStockFilterBackend
         ]
+    filterset_class = ProductFilter
     # Sort Fields
     ordering_fields= [
         'name',

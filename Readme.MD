@@ -1,8 +1,10 @@
 # Running Django
+### activate
+    source venv-drf/Scripts/activate
 ### cmd
     python .\manage.py runserver
 ### git bash
-    source venv-drf/Scripts/activate
+    python manage.py runserver
 # Create venv 
     python -m venv ./venv-drf
 
@@ -112,3 +114,8 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
 ---
     isort .\api\views.py
 
+# Config url upload imag can access
+    import os
+    
+    MEDIA_URL = '/media/'  # URL prefix for accessing media files
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored

@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="741b33b1-54ca-4fbe-913f-8e0c0163d820" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/api-django.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api-django.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Readme.MD" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drf_course/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/drf_course/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drf_course/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/drf_course/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models.dot" beforeDir="false" afterPath="$PROJECT_DIR$/models.dot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,10 +36,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Django Server.django.executor": "Run",
+    "Django Server.sdf.executor": "Run",
+    "Python.Run.executor": "Run",
+    "Python.manage.py runserver.executor": "Run",
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Coding_Life/api-django",
     "node.js.detected.package.eslint": "true",
@@ -41,22 +58,24 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="api-django" type="Python.DjangoServer" factoryName="Django server">
+    <configuration name="django" type="Python.DjangoServer" factoryName="Django server">
       <module name="api-django" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="drf_course.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.13 (api-django)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
-      <option name="host" value="" />
+      <option name="port" value="4000" />
+      <option name="host" value="localhost" />
       <option name="additionalOptions" value="" />
       <option name="browserUrl" value="" />
       <option name="runTestServer" value="false" />
@@ -69,8 +88,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
       </set>
     </attachedChunks>
   </component>
@@ -83,7 +102,12 @@
       <option name="presentableId" value="Default" />
       <updated>1738644748948</updated>
       <workItem from="1738644750092" duration="62000" />
-      <workItem from="1738934242487" duration="1988000" />
+      <workItem from="1738934242487" duration="2051000" />
+      <workItem from="1738937232602" duration="1089000" />
+      <workItem from="1738938411844" duration="17000" />
+      <workItem from="1738940242589" duration="40000" />
+      <workItem from="1738940291290" duration="3415000" />
+      <workItem from="1738985665661" duration="5578000" />
     </task>
     <servers />
   </component>

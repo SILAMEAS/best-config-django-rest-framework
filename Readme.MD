@@ -1,13 +1,10 @@
-# Running Django
-### activate
-    source venv-drf/Scripts/activate
-### cmd
-    python .\manage.py runserver
-### git bash
-    python manage.py runserver
 # Create venv 
     python -m venv ./venv-drf
-
+### activate
+### cmd
+    source venv-drf/Scripts/activate
+### git bash
+    source venv-drf/Scripts/activate
 # Installing requirements
     pip install -r ./requirements.txt
 
@@ -16,6 +13,12 @@
 
 # Run Migrate 
     python .\manage.py migrate
+# Running Django
+
+### cmd
+    python .\manage.py runserver
+### git bash
+    python manage.py runserver
 
 # Populate : Render loop data to database
     python .\manage.py populate_db

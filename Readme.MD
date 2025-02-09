@@ -124,3 +124,5 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored
 # Run shell
     python manage.py shell
+# Collecte all dependecy and make it in file requirements.txt
+    pip freeze > requirements.txt

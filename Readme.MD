@@ -8,6 +8,12 @@
 # Installing requirements
     pip install -r ./requirements.txt
 
+# Create a New Django Project
+    django-admin startproject myproject .
+
+#  Create a Django App
+    python manage.py startapp myapp
+
 # Make migrations 
     python .\manage.py makemigrations
 

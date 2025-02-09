@@ -109,8 +109,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name','is_staff','password','id']
+        fields = ['username', 'email', 'first_name', 'last_name','is_staff','password','id','is_superuser','is_active','is_staff','last_login']
     def validate_password(self,value):
         if value is None:
             raise serializers.ValidationError('Password is required!')
         return value
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)  # Ensures password is hashed
+        return user

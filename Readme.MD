@@ -119,3 +119,5 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     
     MEDIA_URL = '/media/'  # URL prefix for accessing media files
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored
+# Run shell
+    python manage.py shell

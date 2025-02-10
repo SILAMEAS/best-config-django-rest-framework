@@ -134,5 +134,9 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     pip freeze > requirements.txt
 
 # Allow file uploads
+
+    from rest_framework.parsers import MultiPartParser, FormParser
+---
+
     parser_classes = [MultiPartParser, FormParser]
 

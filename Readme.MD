@@ -139,4 +139,14 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
 ---
 
     parser_classes = [MultiPartParser, FormParser]
+---
+
+    SPECTACULAR_SETTINGS = {
+    'TITLE': 'LA Gear Store',
+    'DESCRIPTION': 'Online Shopping sell accessories computer',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,  # Ensures correct handling of file uploads
+    # OTHER SETTINGS
+
 

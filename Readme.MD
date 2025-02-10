@@ -132,3 +132,7 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     python manage.py shell
 # Collecte all dependecy and make it in file requirements.txt
     pip freeze > requirements.txt
+
+# Allow file uploads
+    parser_classes = [MultiPartParser, FormParser]
+

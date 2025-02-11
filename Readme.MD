@@ -92,6 +92,21 @@ get start :
 https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
 ---
           pip install djangorestframework-simplejwt
+---
+### add time life of jwt
+        from datetime import timedelta
+
+        REST_FRAMEWORK = {
+            'DEFAULT_AUTHENTICATION_CLASSES': (
+                'rest_framework_simplejwt.authentication.JWTAuthentication',
+            ),
+        }
+        
+        SIMPLE_JWT = {
+            'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Change to your desired access token lifetime
+            'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Change to your desired refresh token lifetime
+        }
+
 # Open API :
 https://drf-spectacular.readthedocs.io/en/latest/readme.html
 ### pip install drf-spectacular

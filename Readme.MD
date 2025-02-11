@@ -149,4 +149,31 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     'COMPONENT_SPLIT_REQUEST': True,  # Ensures correct handling of file uploads
     # OTHER SETTINGS
 
+# SuperAdminOnly for PUT/POST/DELTE and get for all
+
+    from rest_framework import permissions
+    
+    class SuperAdminOnly(permissions.BasePermission):
+        """
+        Custom permission to allow only super admins to modify data.
+        """
+    
+        def has_permission(self, request, view):
+            # Allow GET, HEAD, OPTIONS for everyone
+            if request.method in permissions.SAFE_METHODS:
+                return True
+            # Allow PUT, POST, DELETE only for super admins
+            return request.user and request.user.is_superuser
+---
+    from rest_framework import viewsets
+    from .models import YourModel
+    from .serializers import YourSerializer
+    from .permissions import SuperAdminOnly
+    
+    class YourViewSet(viewsets.ModelViewSet):
+        queryset = YourModel.objects.all()
+        serializer_class = YourSerializer
+        permission_classes = [SuperAdminOnly]  # Apply custom permission
+
+
 

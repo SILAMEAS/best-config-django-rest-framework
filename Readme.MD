@@ -1,3 +1,9 @@
+# Development on render  
+    Build Command : pip install -r requirements.txt
+    ---
+    Start Command : waitress-serve gear_store.wsgi:application
+    ---
+    Depend on project name : gear_store
 # Create venv 
     python -m venv ./venv-drf
 ### activate

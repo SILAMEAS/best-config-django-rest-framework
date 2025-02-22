@@ -197,4 +197,13 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
         permission_classes = [SuperAdminOnly]  # Apply custom permission
 
 
+# Reset Password
 
+    python manage.py shell
+
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    user = User.objects.get(email="your_email", is_superuser=True)
+    user.set_password("new_password")
+    user.save()
+    exit()

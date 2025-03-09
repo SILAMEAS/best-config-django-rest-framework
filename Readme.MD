@@ -207,3 +207,7 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
     user.set_password("new_password")
     user.save()
     exit()
+
+# Run Script
+
+    python manage.py shell < reset_password.py

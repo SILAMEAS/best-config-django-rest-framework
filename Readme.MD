@@ -211,3 +211,196 @@ https://drf-spectacular.readthedocs.io/en/latest/readme.html
 # Run Script
 
     python manage.py shell < reset_password.py
+
+### Deployment Vercel
+
+---
+
+#### 1.1 Install Dependencies
+Ensure you have the necessary dependencies for a Vercel deployment:
+
+---
+        pip install gunicorn whitenoise django-vercel
+if error : run this
+
+        pip install gunicorn whitenoise dj-database-url
+
+#### 1.2 Configure settings.py
+Modify your settings.py for Vercel:
+
+Update ALLOWED_HOSTS
+
+---
+        ALLOWED_HOSTS = ["*"]
+
+Enable Whitenoise for Static Files
+
+        MIDDLEWARE = [
+        "django.middleware.security.SecurityMiddleware",
+        "whitenoise.middleware.WhiteNoiseMiddleware",  # Add this line
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.middleware.common.CommonMiddleware",
+        "django.middleware.csrf.CsrfViewMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
+        "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        ]
+Serve Static Files
+
+Add:
+
+        STATIC_URL = "/static/"
+        STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+Use PostgreSQL (Recommended)
+Vercel doesn’t support SQLite, so configure PostgreSQL (NeonDB or Supabase).
+
+        import dj_database_url
+        
+        DATABASES = {
+        "default": dj_database_url.config(conn_max_age=600, ssl_require=True)
+        }
+Set your PostgreSQL URL in .env:
+
+        DATABASE_URL=postgres://user:password@host:port/dbname
+
+#### 2.2 Create a vercel.json file
+This tells Vercel how to deploy Django.
+
+---
+
+        {
+        "version": 2,
+        "builds": [{ "src": "vercel_wsgi.py", "use": "@vercel/python" }],
+        "routes": [{ "src": "/(.*)", "dest": "vercel_wsgi.py" }]
+        }
+
+#### Step 3: Add vercel_wsgi.py
+Create a vercel_wsgi.py file to connect Django with Vercel:
+
+---
+        from vercel_wsgi import handle_wsgi
+        from myproject.wsgi import application  # Replace `myproject` with your Django project name
+        
+        app = handle_wsgi(application)
+
+#### Step 4: Deploy to Vercel
+Create a vercel_wsgi.py file to connect Django with Vercel:
+
+---
+#### * 4.1 Login to Vercel
+    vercel login
+
+---
+#### * 4.2 Deploy the Project
+    vercel
+
+#### Step 5: Set Environment Variables
+In the Vercel Dashboard (vercel.com):
+
+* Go to your project settings.
+* Add Environment Variables like DATABASE_URL, SECRET_KEY, etc.
+---
+
+#### Step 6: Migrate and Collect Static Files
+After deployment, run:
+    
+    vercel env pull .env  # Pull Vercel environment variables locally
+    vercel --prod
+
+On Vercel's dashboard, open the Terminal and run:
+
+    python manage.py migrate
+    python manage.py collectstatic --noinput
+
+
+#### Alternative Ways to Run Commands on Vercel
+
+Option 1: Run Commands Locally Using Vercel CLI
+Since Vercel doesn’t provide an interactive terminal, you can run commands locally and let them take effect on Vercel.
+
+#### 1.Pull environment variables from Vercel:
+
+---
+    vercel env pull .env
+
+#### 2.Run migrations locally (if using a cloud database like Neon, Supabase, or Railway):
+
+---
+    python manage.py migrate
+
+#### 3.Collect static files and push them to Vercel:
+
+---
+    python manage.py collectstatic --noinput
+    vercel --prod
+
+#### Option 2: Use a Custom Vercel API Route
+
+If you must run a command on Vercel, you can create a temporary API route.
+
+1. Create a new file inside your Django app folder (e.g., run_migrate.py):
+
+        import os
+        from django.core.management import call_command
+        from django.http import JsonResponse
+        def migrate(request):
+        call_command("migrate")
+        return JsonResponse({"message": "Migrations applied successfully!"})
+2. Add a URL route to call this function:
+
+
+    from django.urls import path
+    from .run_migrate import migrate
+    
+    urlpatterns = [
+    path("run-migrate/", migrate),
+    ]
+3. Deploy the changes using:
+
+
+    vercel --prod
+4. Open your browser and visit:
+
+
+    https://your-vercel-app.vercel.app/run-migrate/
+
+## NOTE : Install Required Dependencies
+
+If you haven’t installed gunicorn and whitenoise, install them:
+
+    pip install gunicorn whitenoise
+    pip freeze > requirements.txt
+
+Commit and redeploy to Vercel.
+
+#### Update vercel.json
+
+---
+
+        {
+        "version": 2,
+        "builds": [
+        {
+        "src": "vercel_wsgi.py",
+        "use": "@vercel/python"
+        }
+        ],
+        "routes": [
+        {
+        "src": "/(.*)",
+        "dest": "vercel_wsgi.py"
+        }
+        ]
+        }
+
+####  Check for Missing Environment Variables
+
+---
+On Vercel, go to Dashboard > Project > Settings > Environment Variables and ensure all required variables (like DATABASE_URL, SECRET_KEY, etc.) are added.
+
+#### Redeploy to Vercel
+After making the changes, redeploy using:
+
+        vercel --prod

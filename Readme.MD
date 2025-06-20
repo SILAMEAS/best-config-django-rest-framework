@@ -1,3 +1,61 @@
+# Best Config: Django REST Framework 🛠️
+
+A boilerplate and configuration guide for setting up production-ready Django REST Framework (DRF) APIs with best practices.
+
+---
+
+## 🚀 Project Overview
+
+This repository provides a robust starting point for any DRF-based API project. It includes:
+
+- Clean project structure
+- Serializer, view, and routing templates
+- Pagination, filtering, and search
+- Authentication & permissions (Token, JWT)
+- API documentation via Swagger / Redoc
+- Celery for background tasks
+- Dockerized development & production
+- CI/CD-ready configuration (GitHub Actions)
+
+---
+
+## 🧱 Tech Stack
+
+| Layer              | Tools & Libraries                          |
+|--------------------|--------------------------------------------|
+| Python             | 3.9+ (tested on 3.10, 3.11)                |
+| Framework          | Django 4.x                                 |
+| API Toolkit        | Django REST Framework (DRF)                |
+| Auth               | Django REST Framework Simple JWT / Token   |
+| API Docs           | drf-yasg or drf-spectacular (OpenAPI)      |
+| Filtering & Search | django-filter, DRF SearchFilter            |
+| Pagination         | DRF LimitOffset/PageNumber Pagination       |
+| Background Tasks   | Celery + Redis                              |
+| Database           | PostgreSQL (local: SQLite supported)        |
+| Containerization   | Docker & Docker Compose                     |
+| Code Quality       | Flake8, Black, isort, MyPy                  |
+| CI/CD              | GitHub Actions (linting, tests)             |
+
+---
+
+## 🗂️ Folder Layout
+
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the repo & enter directory
+
+```bash
+git clone https://github.com/SILAMEAS/best-config-django-rest-framework.git
+cd best-config-django-rest-framework
+
+
+
+
+
+
 # Development on render  
     Build Command : pip install -r requirements.txt
     ---

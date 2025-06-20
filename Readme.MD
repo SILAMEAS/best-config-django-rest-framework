@@ -39,7 +39,17 @@ This repository provides a robust starting point for any DRF-based API project. 
 ---
 
 ## 🗂️ Folder Layout
-
+/best_config/
+├─ api/ → Sample endpoints
+├─ core/ → Project settings & common utilities
+├─ tasks/ → Celery task modules
+├─ requirements/ → requirements.txt and dev dependencies
+.docker/
+├─ Dockerfile → Production
+└─ docker-compose.yml → Dev/production services
+.github/
+└─ workflows/ → CI pipelines (lint, tests)
+/docs/ → Swagger or Redoc auto-generated docs
 
 ---
 
